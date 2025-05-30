@@ -7,6 +7,9 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   return (
-
+    <NavigationContainer>
+      <StackNavigator/>
+      <StatusBar style='auto' />
+    </NavigationContainer>
   );
 }

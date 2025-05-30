@@ -9,7 +9,13 @@ import UserDetailsScreen from '../screens/UserDetailsScreen';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => (
-
+    <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Register" component={RegisterScreen}/>
+        <Stack.Screen name="UserList" component={UserListScreen}/>
+        <Stack.Screen name="UserDetails" component={UserDetailsScreen}/>
+    </Stack.Navigator>
 );
 
 export default StackNavigator;
