@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  Image,
+  StyleSheet
 } from 'react-native';
 import useFirebase from '../hooks/useFirebase';
 import globalStyles from '../styles/globalStyles';
@@ -22,19 +24,60 @@ export default function UserDetailsScreen({ route }) {
 
   if (!user) {
     return (
-      <View style={globalStyles.container}>
-        <ActivityIndicator size="large" />
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#143D59" />
       </View>
     );
   }
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Detalhes</Text>
-      <Text>Nome: {user.nome}</Text>
-      <Text>Período: {user.periodo}</Text>
-      <Text>Email: {user.email}</Text>
-      {/* Não exiba senha em produção! */}
+    <View style={styles.container}>
+      <Image
+        source={require('../../assets/unipam_logo.png')}
+        style={styles.logo}
+      />
+      <Text style={styles.title}>Detalhes do Usuário</Text>
+      <View style={styles.detailsContainer}>
+        <Text style={styles.detailText}><Text style={styles.detailLabel}>Nome:</Text> {user.nome}</Text>
+        <Text style={styles.detailText}><Text style={styles.detailLabel}>Período:</Text> {user.periodo}</Text>
+        <Text style={styles.detailText}><Text style={styles.detailLabel}>Email:</Text> {user.email}</Text>
+        {/* Não exiba senha em produção! */}
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#E9EEF4',
+    paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#143D59',
+    marginBottom: 20,
+  },
+  detailsContainer: {
+    width: '100%',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 5,
+  },
+  detailText: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#333',
+  },
+  detailLabel: {
+    fontWeight: 'bold',
+  },
+});
