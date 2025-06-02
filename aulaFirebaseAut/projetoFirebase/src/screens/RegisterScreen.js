@@ -10,36 +10,50 @@ import {
   StyleSheet
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import auth from '../services/credenciaisFirebaseAuth';
-import useFirebase from '../hooks/useFirebase';
 import globalStyles from '../styles/globalStyles';
 
 export default function RegisterScreen({ navigation }) {
   const [form, setForm] = useState({
     nome: '',
     periodo: '',
+    curso: '',
     email: '',
-    senha: ''
+    senha: '',
+    tipo: 'aluno'
   });
-  const { addUser } = useFirebase();
 
   const handleChange = (field, value) =>
     setForm({ ...form, [field]: value });
 
   const handleSubmit = async () => {
     try {
-      // 1) cadastra no Firestore
-      await addUser(form);
-      // 2) cadastra no Auth
-      await createUserWithEmailAndPassword(
+      // 1) Primeiro cadastra no Auth para obter o UID
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         form.email,
         form.senha
       );
+      
+      // 2) Obtém o UID gerado
+      const uid = userCredential.user.uid;
+      
+      // 3) Cadastra no Firestore usando o UID como ID do documento
+      const db = getFirestore();
+      await setDoc(doc(db, 'pessoa', uid), {
+        nome: form.nome,
+        periodo: form.periodo,
+        curso: form.curso,
+        email: form.email,
+        tipo: form.tipo,
+        // Não incluir a senha aqui por segurança
+      });
+      
       Alert.alert('Sucesso', 'Usuário cadastrado!');
       navigation.navigate('Login');
     } catch (error) {
-      Alert.alert('Erro', 'Falha no cadastro');
+      Alert.alert('Erro', 'Falha no cadastro: ' + error.message);
       console.error(error);
     }
   };
@@ -59,6 +73,15 @@ export default function RegisterScreen({ navigation }) {
         value={form.nome}
         onChangeText={(v) => handleChange('nome', v)}
         autoCapitalize="words"
+      />
+
+      <Text style={styles.label}>Curso</Text>
+      <TextInput
+        placeholder="Digite o seu Curso"
+        style={styles.input}
+        value={form.curso}
+        onChangeText={(v) => handleChange('curso', v)}
+        autoCapitalize="none"
       />
 
       <Text style={styles.label}>Período</Text>
@@ -100,6 +123,7 @@ export default function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  // Seus estilos permanecem iguais
   container: {
     flex: 1,
     alignItems: 'center',
