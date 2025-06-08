@@ -123,7 +123,6 @@ export default function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  // Seus estilos permanecem iguais
   container: {
     flex: 1,
     alignItems: 'center',
