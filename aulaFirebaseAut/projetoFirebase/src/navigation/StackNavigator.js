@@ -10,6 +10,10 @@ import GerenciarCursosScreen from '../screens/cursos/GerenciarCursosScreen';
 import AdicionarCursoScreen from '../screens/cursos/AdicionarCursoScreen';
 import EditarCursoScreen from '../screens/cursos/EditarCursoScreen';
 import DetalhesCursoScreen from '../screens/cursos/DetalhesCursoScreen';
+import GerenciarPeriodosScreen from '../screens/periodos/GerenciarPeriodosScreen';
+import AdicionarPeriodoScreen from '../screens/periodos/AdicionarPeriodoScreen';
+import EditarPeriodoScreen from '../screens/periodos/EditarPeriodoScreen';
+import DetalhesPeriodoScreen from '../screens/periodos/DetalhesPeriodoScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +44,27 @@ const StackNavigator = () => (
             name="DetalhesCurso" 
             component={DetalhesCursoScreen}
             options={{ title: 'Detalhes do Curso' }}
+        />
+        
+        <Stack.Screen 
+            name="GerenciarPeriodos" 
+            component={GerenciarPeriodosScreen}
+            options={{ title: 'Gerenciar Períodos' }}
+        />
+        <Stack.Screen 
+            name="AdicionarPeriodo" 
+            component={AdicionarPeriodoScreen}
+            options={{ title: 'Adicionar Período' }}
+        />
+        <Stack.Screen 
+            name="EditarPeriodo" 
+            component={EditarPeriodoScreen}
+            options={{ title: 'Editar Período' }}
+        />
+        <Stack.Screen 
+            name="DetalhesPeriodo" 
+            component={DetalhesPeriodoScreen}
+            options={{ title: 'Detalhes do Período' }}
         />
     </Stack.Navigator>
 );
