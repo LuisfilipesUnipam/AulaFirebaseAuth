@@ -1,3 +1,4 @@
+// Atualização do StackNavigator.js
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
@@ -14,6 +15,11 @@ import GerenciarPeriodosScreen from '../screens/periodos/GerenciarPeriodosScreen
 import AdicionarPeriodoScreen from '../screens/periodos/AdicionarPeriodoScreen';
 import EditarPeriodoScreen from '../screens/periodos/EditarPeriodoScreen';
 import DetalhesPeriodoScreen from '../screens/periodos/DetalhesPeriodoScreen';
+// Novas importações para o módulo de usuários
+import GerenciarUsuariosScreen from '../screens/usuarios/GerenciarUsuariosScreen';
+import AdicionarUsuarioScreen from '../screens/usuarios/AdicionarUsuarioScreen';
+import EditarUsuarioScreen from '../screens/usuarios/EditarUsuarioScreen';
+import DetalhesUsuarioScreen from '../screens/usuarios/DetalhesUsuarioScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +31,8 @@ const StackNavigator = () => (
         <Stack.Screen name="Register" component={RegisterScreen}/>
         <Stack.Screen name="UserList" component={UserListScreen}/>
         <Stack.Screen name="UserDetails" component={UserDetailsScreen}/>
+        
+        {/* Cursos */}
         <Stack.Screen 
             name="GerenciarCursos" 
             component={GerenciarCursosScreen}
@@ -45,7 +53,8 @@ const StackNavigator = () => (
             component={DetalhesCursoScreen}
             options={{ title: 'Detalhes do Curso' }}
         />
-        
+      
+        {/* Períodos */}
         <Stack.Screen 
             name="GerenciarPeriodos" 
             component={GerenciarPeriodosScreen}
@@ -65,6 +74,28 @@ const StackNavigator = () => (
             name="DetalhesPeriodo" 
             component={DetalhesPeriodoScreen}
             options={{ title: 'Detalhes do Período' }}
+        />
+        
+        {/* Usuários - Novas telas */}
+        <Stack.Screen 
+            name="GerenciarUsuarios" 
+            component={GerenciarUsuariosScreen}
+            options={{ title: 'Gerenciar Usuários' }}
+        />
+        <Stack.Screen 
+            name="AdicionarUsuario" 
+            component={AdicionarUsuarioScreen}
+            options={{ title: 'Adicionar Usuário' }}
+        />
+        <Stack.Screen 
+            name="EditarUsuario" 
+            component={EditarUsuarioScreen}
+            options={{ title: 'Editar Usuário' }}
+        />
+        <Stack.Screen 
+            name="DetalhesUsuario" 
+            component={DetalhesUsuarioScreen}
+            options={{ title: 'Detalhes do Usuário' }}
         />
     </Stack.Navigator>
 );
