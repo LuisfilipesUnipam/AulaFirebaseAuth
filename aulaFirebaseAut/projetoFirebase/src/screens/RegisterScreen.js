@@ -21,7 +21,7 @@ export default function RegisterScreen({ navigation }) {
     curso: '',
     email: '',
     senha: '',
-    tipo: 'aluno'
+    tipo: 'aluno' // Definindo tipo como aluno por padrão
   });
 
   const handleChange = (field, value) =>
@@ -29,6 +29,11 @@ export default function RegisterScreen({ navigation }) {
 
   const handleSubmit = async () => {
     try {
+      if (!form.nome || !form.email || !form.senha || !form.curso || !form.periodo) {
+        Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
       // 1) Primeiro cadastra no Auth para obter o UID
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -46,14 +51,20 @@ export default function RegisterScreen({ navigation }) {
         periodo: form.periodo,
         curso: form.curso,
         email: form.email,
-        tipo: form.tipo,
-        // Não incluir a senha aqui por segurança
+        tipo: 'aluno', // Forçando o tipo como aluno
+        status: 'ativo',
+        dataCriacao: new Date().toISOString(),
+        projetos: [] // Array para armazenar os projetos do aluno
       });
       
-      Alert.alert('Sucesso', 'Usuário cadastrado!');
+      Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
       navigation.navigate('Login');
     } catch (error) {
-      Alert.alert('Erro', 'Falha no cadastro: ' + error.message);
+      if (error.code === 'auth/email-already-in-use') {
+        Alert.alert('Erro', 'Este email já está em uso.');
+      } else {
+        Alert.alert('Erro', 'Falha no cadastro: ' + error.message);
+      }
       console.error(error);
     }
   };
@@ -64,9 +75,9 @@ export default function RegisterScreen({ navigation }) {
         source={require('../../assets/unipam_logo.png')}
         style={styles.logo}
       />
-      <Text style={styles.title}>Cadastrar Usuário</Text>
+      <Text style={styles.title}>Cadastrar Aluno</Text>
 
-      <Text style={styles.label}>Nome</Text>
+      <Text style={styles.label}>Nome *</Text>
       <TextInput
         placeholder="Digite o seu Nome"
         style={styles.input}
@@ -75,7 +86,7 @@ export default function RegisterScreen({ navigation }) {
         autoCapitalize="words"
       />
 
-      <Text style={styles.label}>Curso</Text>
+      <Text style={styles.label}>Curso *</Text>
       <TextInput
         placeholder="Digite o seu Curso"
         style={styles.input}
@@ -84,7 +95,7 @@ export default function RegisterScreen({ navigation }) {
         autoCapitalize="none"
       />
 
-      <Text style={styles.label}>Período</Text>
+      <Text style={styles.label}>Período *</Text>
       <TextInput
         placeholder="Digite o seu Período"
         style={styles.input}
@@ -93,7 +104,7 @@ export default function RegisterScreen({ navigation }) {
         autoCapitalize="none"
       />
 
-      <Text style={styles.label}>Email</Text>
+      <Text style={styles.label}>Email *</Text>
       <TextInput
         placeholder="Digite o seu Email"
         style={styles.input}
@@ -103,7 +114,7 @@ export default function RegisterScreen({ navigation }) {
         keyboardType="email-address"
       />
 
-      <Text style={styles.label}>Senha</Text>
+      <Text style={styles.label}>Senha *</Text>
       <TextInput
         placeholder="Digite a sua Senha"
         style={styles.input}

@@ -22,8 +22,6 @@ export default function InitialScreen({ navigation }) {
       try {
         const auth = getAuth();
         const user = auth.currentUser;
-
-        console.log(auth.currentUser);
         
         if (user) {
           const db = getFirestore();
@@ -44,7 +42,7 @@ export default function InitialScreen({ navigation }) {
     
     fetchUserData();
   }, []);
-  
+
   const renderAdminOptions = () => (
     <>
       <Text style={styles.sectionTitle}>Gerenciamento</Text>
@@ -76,19 +74,14 @@ export default function InitialScreen({ navigation }) {
     <>
       <Text style={styles.sectionTitle}>Projetos</Text>
       <View style={styles.optionsGrid}>
-        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('MeusProjetos')}>
+        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('ProjectList')}>
           <Ionicons name="folder-outline" size={32} color="#143D59" />
           <Text style={styles.optionText}>Meus Projetos</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('CadastrarProjeto')}>
+        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('ProjectForm')}>
           <Ionicons name="add-circle-outline" size={32} color="#143D59" />
           <Text style={styles.optionText}>Novo Projeto</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('TemasDisponiveis')}>
-          <Ionicons name="list-outline" size={32} color="#143D59" />
-          <Text style={styles.optionText}>Temas</Text>
         </TouchableOpacity>
       </View>
     </>
@@ -102,10 +95,9 @@ export default function InitialScreen({ navigation }) {
           <Ionicons name="checkmark-circle-outline" size={32} color="#143D59" />
           <Text style={styles.optionText}>Avaliar Projetos</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('HistoricoAvaliacoes')}>
-          <Ionicons name="time-outline" size={32} color="#143D59" />
-          <Text style={styles.optionText}>Histórico</Text>
+        <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate('ProjetosAvaliados')}>
+          <Ionicons name="list-circle-outline" size={32} color="#143D59" />
+          <Text style={styles.optionText}>Projetos Avaliados</Text>
         </TouchableOpacity>
       </View>
     </>
